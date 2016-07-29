@@ -311,6 +311,7 @@ create.phylo <- function(n, popsize){
 #takes in a tree and finds the length of each interval
 #returns a matrix with the first column the length of the current interval, column 2 as the origin internal node of that interval and column 3 the number of active lineages for that interval
 interval.sort <- function(tr){
+  #node to tip distance
   br <- branching.times(tr)
   actual.tbr <- matrix(NA,nrow = length(br), ncol=3)
   
@@ -403,23 +404,32 @@ For Non-Ultrametric Trees:
 dist.to.root <- function(t){
   m <- matrix(NA, nrow=length(t$tip.label)+t$Nnode, ncol=2)
   colnames(m) <- c("dist","node")
+  
+  #Fill in the distance matrix for the tips using distRoot()
   a <- distRoot(t)
   for(i in 1:length(a)){
     m[i,2] <- i
     m[i,1] <- a[[i]]
   }
+  
+  #Fill in the root length as 0
   root <- length(t$tip.label) + 1
   m[root,2] <- root
   m[root,1] <- 0
+  
+  #Fill in the internal nodes in the matrix
+  #Check first to see if you have a tree with internal nodes
   if(length(m[,1])>3){
+    #starting from the internal node after the root and going to the last internal node
     for(node in (length(t$tip.label)+2):(length(t$tip.label)+t$Nnode)){
+      #find the shortest path between nodes to get from the root to the node of interest. If there are internal nodes between the node of interest, add their lengths
+      #otherwise just record the length of the node of interest
       p <- shortestPath(t, root, node)
       if(length(p)>0){
         length <- t$edge.length[which(t$edge[,2]==node)]
         for(j in 1:length(p)){
           length <- length + t$edge.length[which(t$edge[,2]==p[[j]])]
         }
-      
       }
       else{
         length <- t$edge.length[which(t$edge[,2]==node)]
@@ -429,7 +439,7 @@ dist.to.root <- function(t){
       m[node, 1] <-length
     }
   }
-  
+  #return an ordered distance from root, node paired matrix
   return(m[order(m[, "dist"], decreasing=TRUE),])
 }
 
@@ -482,7 +492,7 @@ nu.one.lin.p <- function(t, popsize){
   one.lin.prob[1] <- one.lin.prob[1]/full[1,3]  
   
   for(i in 2: length(one.lin.prob)){
-    for(j in (i-1):length(one.lin.prob)){
+    for(j in (i-1):1){
       one.lin.prob[i] <- one.lin.prob[i]*nocoal[j]
     }
     one.lin.prob[i] <- one.lin.prob[i]/full[i,3]

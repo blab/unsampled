@@ -1,11 +1,12 @@
 ---
-title: "7-19ConditionalProbNodes"
+title: "ProbNodes-Functions"
 author: "Stephanie Stacy"
 date: "July 19, 2016"
 output: html_document
 ---
 Coalescent Simulator, phylo object conversion, node theoretical probability calculations
 
+Packages
 ```{r}
 require(ape)
 require(hash)
@@ -14,6 +15,7 @@ require(ctv)
 require(phylobase)
 require(adephylo)
 require(dplyr)
+require(stringr)
 ```
 
 ```{r cosim}
@@ -399,6 +401,10 @@ node.prob <- function(t, subtree, popsize){
 
 For Non-Ultrametric Trees:
 
+<!--  These functions travel tip to root. Intervals with nodes labels less than the number of tips are intervals that are started by tips on the right side of the  interval. -->
+
+<!-- You can't travel from internal node to internal node, you must travel by intervals (toward the root) -->
+
 ```{r dist.to.root}
 #takes in a tree (allows for non-ultrametric) and returns a matrix of distance from each node or tip to the root, ordered by decreasing length
 dist.to.root <- function(t){
@@ -444,22 +450,24 @@ dist.to.root <- function(t){
 }
 
 ```
-
-<!--  These functions travel tip to root. Intervals with nodes labels less than the number of tips are intervals that are started by tips on the right side of the  interval. -->
-
-<!-- You can't travel from internal node to internal node, you must travel by intervals (toward the root) -->
  
 ```{r nu.interval.sort}
+#Like the ultrametric interval sort, takes in a tree and returns a matrix with the interval length in the first column, the node associated with that length in the second, and the number of active lineages in the third
 nu.interval.sort <- function(t){
   x <- dist.to.root(t)
   intervals <- matrix(NA, nrow = length(x[,1])-1, ncol=3)
   colnames(intervals) <- c("len","node", "lineages")
   lins <- 0
+  
+  #For each row in the distance to the root, takes the difference between consecutive rows
   for(i in 1:(length(x[,1])-1)){
     intervals[i,1] <- x[i,1] - x[(i+1),1]
     intervals[i,2] <- x[i,2]
+    
+    #if its a tip, add a new lineage to the current number of lineages
+    #otherwise, it's a node and you should subtract a lineage from the list
     if(x[i,2] <= length(t$tip.label)){
-      lins <- lins +1
+      lins <- lins + 1
     }
     else{
       lins <- lins - 1
@@ -472,11 +480,11 @@ nu.interval.sort <- function(t){
 ```
 
 ```{r nu.pcoal.cont}
-
+#Returns the probability of a coalescent event in a specific interval using the continuous time (exponentially distributed) probability of the coalescent math
 nu.pcoal.cont <- function(t, popsize){
   ints <- nu.interval.sort(t)
   pcoal <- rep(0, length(ints[,1]))
-  
+  #for each row in the sorted interval, find p(Coal) = 1-e^(-k/N*t)
   for(i in 1:length(ints[,1])) { 
     pcoal[i] <- 1-exp(-(ints[i,3]/popsize)*ints[i,1])
   }
@@ -485,6 +493,7 @@ nu.pcoal.cont <- function(t, popsize){
 ```
 
 ```{r nu.one.lin.p}
+#Returns the probability of coalescing onto one specific lineage in an interval. Takes into account all of the previous intervals seen.  I.e. the probability of coalescing in interval i given that the event did not occur in the intervals i-1 to 1.
 nu.one.lin.p <- function(t, popsize){
   full <- nu.interval.sort(t)
   one.lin.prob <- nu.pcoal.cont(t, popsize)
@@ -510,41 +519,50 @@ nu.node.prob <- function(t, subtree, popsize){
   s.sort <- nu.interval.sort(subtree)
   lin.p <- nu.one.lin.p(t,popsize)
   prob <- 0
-  
+  #end.interval <- which(distRoot(x)==max(distRoot(x)))
   #initialize start points in both trees
   if(as.numeric(subtree$name)==(length(t$tip.label)+1)){
+    #deals with starting on the full tree (the interval sort does not have a row for the root because the distance to the root is 0)
     f.index <- length(f.sort[,2])
   }
   else{
     f.index <- which(f.sort[,2]==as.numeric(subtree$name))-1
   }
   s.index <- length(s.sort[,2])
+  # cat("Initialization- Full tree index: ", f.index, "\n")
+  # cat("Initialization- Subtree index: ", s.index, "\n")
 
-
+  #Must add the probability of coalescing in each interval defined by the full tree. However, the number of lineages in the full tree is not necessarily the same as in the subtree. Thus, we sum branches of the full tree until we reach the length of an interval in the subtree. Then we update the number of current lineages (by the number in the subtree)
   while(s.index > 0){
     f.len <- f.sort[f.index, 1]
     s.inter <- s.sort[s.index, 1]
+    # cat("Outer while S.INDEX: ", s.index, "\n")
+    # cat("Full Length: ", f.len, "\n")
+    # cat("subtree interval length: ", s.inter, "\n")
     
-    while(f.index > 0 && (f.len <= s.inter)){
+    while((f.index>0)&&(f.len<=s.inter || abs(f.len-s.inter) <= 1e-15)){
+      # cat("Inner while F.INDEX: ", f.index, "\n")
+      # cat("Inner while F.LEN: ", f.len, "\n")
+      # cat("Inner while S.INTER: ", s.inter, "\n")
       #update probability to add the number of lineages in the current interval times the probability of coalescence in that interval for one lineage
       prob <- prob + s.sort[s.index,3]*lin.p[f.index]
       # debugging
       # cat("Probability: ", prob, "\n")
-      # cat("Full Length: ", f.len, "\n")
-      # cat("subtree interval length: ", s.inter, "\n")
-      # cat("Full index:", f.index, "\n")
-      # cat("Subtree index:", s.index, "\n")
+      # cat("Added prob: ", s.sort[s.index,3]*lin.p[f.index], "\n")
       
 
       f.index <- f.index - 1
-      f.inter <- f.sort[f.index,1]
-      f.len <- f.len + f.inter
+      f.len <- f.len + f.sort[f.index, 1]
+      # cat("Full Tree Length:", f.len, "\n")
+      # cat("Full index:", f.index, "\n")
       
     }
     s.index <- s.index - 1
+    # cat("Subtree index:", s.index, "\n")
   }
   return(prob)
 }
+
 ```
 
 

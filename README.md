@@ -16,8 +16,8 @@ This file is a compilation of methods which include a coalescence simulator for 
 Methods Included:
 #### For Ultrametric Trees 
 cosim(n, popsize)  
-  *Description: Uses the coalescent framework to simulate an ultrametric tree structure. Returns an object with a list of branch lengths, descendants, number of lineages from each node, hash table mapping parent nodes to descendants, total generations, and intervals between branches.  
-  *Arguments: n-number of samples, popsize-effective population size
+  * Description: Uses the coalescent framework to simulate an ultrametric tree structure. Returns an object with a list of branch lengths, descendants, number of lineages from each node, hash table mapping parent nodes to descendants, total generations, and intervals between branches.  
+  * Arguments: n-number of samples, popsize-effective population size
 traverse(xhash, node=0)  
   *Description: Recursively performs in-order tree traversal  
   *Arguments: xhash-the hash table with key value pairs of nodes and their descendants, node-node to start traversal at, default at 0    

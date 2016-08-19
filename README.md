@@ -1,8 +1,8 @@
 # Using the coalescent to detect missed infections in phylogenetic trees
 
-Stephanie Stacy<sup>1,2</sup>, Allison Black<sup>1,3</sup>, Gytis Dudas<sup>1</sup>, Trevor Bedford<sup>1</sup>
+#### Stephanie Stacy<sup>1,2</sup>, Allison Black<sup>1,3</sup>, Gytis Dudas<sup>1</sup>, Trevor Bedford<sup>1</sup>
 
-<sub><sup><sup>1</sup>Vaccine and Infectious Disease Division, Fred Hutchinson Cancer Research Center, Seattle, WA, USA, <sup>2</sup>Williams College, Williamstown, MA, USA, <sup>3</sup>Department of Epidemiology, University of Washington, Seattle, WA, USA</sub></sup>
+<sup>1</sup>Vaccine and Infectious Disease Division, Fred Hutchinson Cancer Research Center, Seattle, WA, USA, <sup>2</sup>Williams College, Williamstown, MA, USA, <sup>3</sup>Department of Epidemiology, University of Washington, Seattle, WA, USA
 
 ## Introduction
 
@@ -13,7 +13,7 @@ under each internal node in a given tree. We extend this method to target nodes 
 
 ## Files
 
-### Node_Prob_Functions.Rmd
+### [`Node_Prob_Functions.Rmd`](Node_Prob_Functions.Rmd)
 
 This file is a compilation of methods which include a coalescence simulator for trees sampled at the same time, conversion of the simulator into a phylo object accepted by apein R, simulation of where an additional unknown sample would fall for an ultrametric tree,and the proportion of samples expected under any internal node in a given phylogenetic tree with a known effective population size.
 
@@ -90,7 +90,7 @@ Methods Included:
   * Arguments: t-a phylo object tree, subtree- a phylo object subtree rooted at the node of interest, popsize- effective population size.
 
 
-### Ebola_Example_Visualizations.Rmd
+### [`Ebola_Example_Visualizations.Rmd`](Ebola_Example_Visualizations.Rmd)
 
 Uses data from the Ebola Sequence Consortium to demonstrate the methodology introduced in Node_Prob_Functions, quantifying proportion of samples expected under internal nodes. Includes visualizations of the labeled Ebola tree as well as calculation and visualization of  Z-scores measuring the difference between proportion of tips seen versus expected under a node. Z-scores serve as a metric for whether a node is predicted to be undersampled. Requires methods from Node_Prob_Functions and the Conakry Ebola subtree Nexus file to run.
 

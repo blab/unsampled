@@ -17,7 +17,7 @@ require(ggplot2)
 require(RColorBrewer)
 ```
 
-Formatting the full ebola tree data and calculating node probabilities and visualizing it:
+Formatting the full ebola tree data and calculating node probabilities
 ```{r}
 #Ebola Data
 
@@ -42,8 +42,10 @@ for(i in 1:length(ebola.pr[,3])){
   ebola.pr[i,3] <- ebola.pr[i,1]*93-ebola.pr[i,2]
 }
 ebola.pr[,3] <- scale(ebola.pr[,3])
+```
 
-#Visualizing the tree with node probabilities
+Visualizing the tree with node probabilities
+```{r}
 ebola2 <- ebola
 ebola2$node.label <- round(ebola.pr[,1], digits=2)
 plot(ebola2, show.node.label = TRUE, cex=.7, show.tip.label=FALSE)
@@ -57,8 +59,7 @@ for(i in 1:length(pr.cols)){
   pr.tree[indicies[1]] <- pr.palatte[i]
   pr.tree[indicies[2]] <- pr.palatte[i]
 }
-plot(ebola2, show.tip.label=FALSE, edge.color=pr.tree, edge.width=5)
-#plot(ebola2, show.tip.label=FALSE, edge.color=pr.tree, edge.width=20, show.node.label=TRUE, cex=5)
+plot(ebola2, show.tip.label=FALSE, edge.color=pr.tree, edge.width=3, show.node.label=TRUE, cex=0.5)
 ```
 
 Visualizing outliers by Z-scores in the full tree
@@ -75,9 +76,10 @@ ggplot(data=zs, aes(zs$ZScore, fill=zs$outlier)) +
   scale_fill_manual(values= cols) + 
   geom_segment(x=2, y= 0, yend=20, xend=2, linetype=2)+
   theme(legend.position="none", axis.text=element_text(size=16), axis.title = element_text(size=20))
+```
 
-
-#Visualizing Outliers on the tree
+Visualizing Outliers on the tree
+```{r}
 #With tip labels
 t.col <- ifelse(ebola$edge[,1] <= 105 & ebola$edge[,1] >= 97, "#284e57", "#a6a2a8")
 wid <-ifelse(ebola$edge[,1] <= 105 & ebola$edge[,1] >= 97, 3, 1)
@@ -88,10 +90,10 @@ t.col2 <-ifelse(e[[4]]$edge[,1] <= 66 & e[[4]]$edge[,1] >= 58, "#284e57", "#a6a2
 wid2 <-ifelse(e[[4]]$edge[,1] <= 66 & e[[4]]$edge[,1] >= 58, 3, 1)
 subt <- extract.clade(ebola2, 97)
 plot(subt, cex=1, show.tip.label=FALSE, edge.color=t.col2, edge.width=wid2+3, show.node.label=TRUE)
+```
 
-
-
-#node probabilities plotted against tips within the clades
+Node probabilities plotted against tips within the clades
+```{r}
 zs$i <- as.factor(dist.nodes(ebola)[1,94:185])
 #colrs <- colorRampPalette(brewer.pal(11,"PiYG"))(92)
 colrs <- colorRampPalette(colors =c("#284e57", "mediumvioletred"))(92)
@@ -104,8 +106,10 @@ ggplot(data=zs, (aes(x=Node.Pr, y=N.Tips/93))) +
   geom_segment(x=0.0, y=0, xend=1.2, yend=1.2, linetype=1, color="#a6a2a8") +
   theme(legend.position="none", axis.text=element_text(size=16), axis.title = element_text(size=20)) +
   scale_color_manual(values=colrs)
+```
 
-#Coloring the full ebola tree by the clades in the scatterplot above
+Coloring the full ebola tree by the clades in the scatterplot above
+```{r}
 x <-zs$i
 colmap <- as.data.frame(cbind(x, 1:92))
 treecol <- rep(0, 92)

@@ -1,6 +1,6 @@
 # Using the coalescent to detect missed infections in phylogenetic trees
 
-Stephanie Stacy<sup>1,2</sup>, Allison Black<sup>1,3</sup>, Gytis Dudas<sup>1</sup>, Trevor Bedford<sup>1</sup>
+#### Stephanie Stacy<sup>1,2</sup>, Allison Black<sup>1,3</sup>, Gytis Dudas<sup>1</sup>, Trevor Bedford<sup>1</sup>
 
 <sup>1</sup>Vaccine and Infectious Disease Division, Fred Hutchinson Cancer Research Center, Seattle, WA, USA, <sup>2</sup>Williams College, Williamstown, MA, USA, <sup>3</sup>Department of Epidemiology, University of Washington, Seattle, WA, USA
 

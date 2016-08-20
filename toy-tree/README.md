@@ -1,4 +1,4 @@
-*R code in Toy_Tree.Rmd*
+*R code in [`Toy_Tree.Rmd`](Toy_Tree.Rmd)*
 
 
 

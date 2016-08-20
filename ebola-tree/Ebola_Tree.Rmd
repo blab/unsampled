@@ -1,4 +1,4 @@
-*R code in Ebola_Tree.Rmd*
+*R code in [`Ebola_Tree.Rmd`](Ebola_Tree.Rmd)*
 
 ## Overview
 

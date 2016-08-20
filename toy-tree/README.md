@@ -1,11 +1,11 @@
-## R code in Toy_Tree.Rmd
+*R code in Toy_Tree.Rmd*
 
 
 
 ## Load libraries and unsampled functions
 
 ```r
-source('../Node_Prob_Functions.R')
+source('../functions/Node_Prob_Functions.R')
 par(mar=c(0,0,0,0))
 ```
 

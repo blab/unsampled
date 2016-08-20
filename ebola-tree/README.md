@@ -1,17 +1,17 @@
+*R code in Ebola_Tree.Rmd*
+
 ## Overview
 
 This uses data from the Ebola Sequence Consortium to demonstrate the methodology introduced in `Node_Prob_Functions`, quantifying proportion of samples expected under internal nodes. Includes visualizations of the labeled Ebola tree as well as calculation and visualization of  Z-scores measuring the difference between proportion of tips seen versus expected under a node. Z-scores serve as a metric for whether a node is predicted to be undersampled. Requires methods from `Node_Prob_Functions` and the Conakry Ebola subtree file [`EBOV_Conakry_subtree.tree`](EBOV_Conakry_subtree.tree) to run.
 
 The Ebola subtree of the Conakry lineage was extracted from the BEAST analysis conducted by [Dudas et al. 2016](https://github.com/ebov/space-time).
 
-## R code in Ebola_Tree.Rmd
-
 
 
 ## Load libraries and unsampled functions
 
 ```r
-source('../Node_Prob_Functions.R')
+source('../functions/Node_Prob_Functions.R')
 par(mar=c(0,0,0,0))
 ```
 

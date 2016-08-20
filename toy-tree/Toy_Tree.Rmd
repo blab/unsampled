@@ -1,4 +1,4 @@
-## R code in Toy_Tree.Rmd
+*R code in Toy_Tree.Rmd*
 
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.path='figures/', fig.width=8, fig.height=6)
@@ -7,7 +7,7 @@ knitr::opts_knit$set(global.par=TRUE)
 
 ## Load libraries and unsampled functions
 ```{r Load libraries and unsampled functions, message=FALSE}
-source('../Node_Prob_Functions.R')
+source('../functions/Node_Prob_Functions.R')
 par(mar=c(0,0,0,0))
 ```
 

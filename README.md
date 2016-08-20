@@ -22,9 +22,9 @@ Install necessary R packages with:
     Rscript -e "library(knitr); setwd('toy-tree'); knit('Toy_Tree.Rmd', 'README.md')"
     Rscript -e "library(knitr); setwd('ebola-tree'); knit('Ebola_Tree.Rmd', 'README.md')"
 
-## Coalescent algorithms
+## [Coalescent functions](functions/)
 
-Core functions are in the file [`Node_Prob_Functions.R`](Node_Prob_Functions.R). The file [`Node_Prob_Functions.md`](Node_Prob_Functions.md) describes these functions. More mathematical detail can be found in the [SURP poster](poster/surp_poster.png)
+These are the core functions of the method. More mathematical detail can be found in the [SURP poster](poster/surp_poster.png).
 
 ## [Toy example](toy-tree/)
 

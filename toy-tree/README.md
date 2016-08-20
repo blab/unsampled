@@ -1,15 +1,17 @@
+## R code in Toy_Tree.Rmd
+
 
 
 ## Load libraries and unsampled functions
 
 ```r
-source('Node_Prob_Functions.R')
+source('../Node_Prob_Functions.R')
+par(mar=c(0,0,0,0))
 ```
 
 ## Stereotypical Coalescent Structure
 
 ```r
-par(mar=c(0,0,0,0))
 set.seed(10)
 t <- create.phylo(40, 2000)
 plot(t, show.tip.label=FALSE)
@@ -64,4 +66,3 @@ edgelabels(text=t$edge.length, frame="none", adj=c(1,-.1), cex= 1)
 ```
 
 ![plot of chunk Plotting toy tree with interval divisions](figures/Plotting toy tree with interval divisions-1.png)
-

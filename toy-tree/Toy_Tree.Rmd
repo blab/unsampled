@@ -1,15 +1,18 @@
+## R code in Toy_Tree.Rmd
+
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.path='figures/', fig.width=8, fig.height=6)
+knitr::opts_knit$set(global.par=TRUE) 
 ```
 
 ## Load libraries and unsampled functions
 ```{r Load libraries and unsampled functions, message=FALSE}
-source('Node_Prob_Functions.R')
+source('../Node_Prob_Functions.R')
+par(mar=c(0,0,0,0))
 ```
 
 ## Stereotypical Coalescent Structure
 ```{r Stereotypical Coalescent Structure}
-par(mar=c(0,0,0,0))
 set.seed(10)
 t <- create.phylo(40, 2000)
 plot(t, show.tip.label=FALSE)
@@ -52,4 +55,3 @@ nodelabels(text = round(node.pr, 4), frame="none", col="#284e57", cex=1)
 tiplabels(text=t$tip.label, frame="circle", bg="#8bb9b9", col="white", cex= 1)
 edgelabels(text=t$edge.length, frame="none", adj=c(1,-.1), cex= 1)
 ```
-

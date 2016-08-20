@@ -1,24 +1,24 @@
----
-title: "Ebola_Visualizations"
-author: "Stephanie Stacy"
-date: "August 9, 2016"
-output: html_document
----
-```{r}
-require(ape)
-require(hash)
-require(phytools)
-require(ctv)
-require(phylobase)
-require(adephylo)
-require(dplyr)
-require(stringr)
-require(ggplot2)
-require(RColorBrewer)
+## Overview
+
+This uses data from the Ebola Sequence Consortium to demonstrate the methodology introduced in `Node_Prob_Functions`, quantifying proportion of samples expected under internal nodes. Includes visualizations of the labeled Ebola tree as well as calculation and visualization of  Z-scores measuring the difference between proportion of tips seen versus expected under a node. Z-scores serve as a metric for whether a node is predicted to be undersampled. Requires methods from `Node_Prob_Functions` and the Conakry Ebola subtree file [`EBOV_Conakry_subtree.tree`](EBOV_Conakry_subtree.tree) to run.
+
+The Ebola subtree of the Conakry lineage was extracted from the BEAST analysis conducted by [Dudas et al. 2016](https://github.com/ebov/space-time).
+
+## R code in Ebola_Tree.Rmd
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.path='figures/', fig.width=8, fig.height=6)
+knitr::opts_knit$set(global.par=TRUE) 
 ```
 
-Formatting the full ebola tree data and calculating node probabilities
-```{r}
+## Load libraries and unsampled functions
+```{r Load libraries and unsampled functions, message=FALSE}
+source('../Node_Prob_Functions.R')
+par(mar=c(0,0,0,0))
+```
+
+## Formatting the full ebola tree data and calculating node probabilities
+```{r Formatting the full ebola tree data and calculating node probabilities}
 #Ebola Data
 
 #With Jitter, Population size of 1
@@ -44,8 +44,8 @@ for(i in 1:length(ebola.pr[,3])){
 ebola.pr[,3] <- scale(ebola.pr[,3])
 ```
 
-Visualizing the tree with node probabilities
-```{r}
+## Visualizing the tree with node probabilities
+```{r Visualizing the tree with node probabilities}
 ebola2 <- ebola
 ebola2$node.label <- round(ebola.pr[,1], digits=2)
 plot(ebola2, show.node.label = TRUE, cex=.7, show.tip.label=FALSE)
@@ -62,8 +62,8 @@ for(i in 1:length(pr.cols)){
 plot(ebola2, show.tip.label=FALSE, edge.color=pr.tree, edge.width=3, show.node.label=TRUE, cex=0.5)
 ```
 
-Visualizing outliers by Z-scores in the full tree
-```{r}
+## Visualizing outliers by Z-scores in the full tree
+```{r Visualizing outliers by Z-scores in the full tree}
 #Visualizing z scors and outliers with histogram in ggplot
 zs <- as.data.frame(ebola.pr)
 zs$outlier <- ifelse(abs(zs[,3]>2),TRUE, FALSE)
@@ -78,8 +78,8 @@ ggplot(data=zs, aes(zs$ZScore, fill=zs$outlier)) +
   theme(legend.position="none", axis.text=element_text(size=16), axis.title = element_text(size=20))
 ```
 
-Visualizing Outliers on the tree
-```{r}
+## Visualizing outliers on the tree
+```{r Visualizing Outliers on the tree}
 #With tip labels
 t.col <- ifelse(ebola$edge[,1] <= 105 & ebola$edge[,1] >= 97, "#284e57", "#a6a2a8")
 wid <-ifelse(ebola$edge[,1] <= 105 & ebola$edge[,1] >= 97, 3, 1)
@@ -92,8 +92,8 @@ subt <- extract.clade(ebola2, 97)
 plot(subt, cex=1, show.tip.label=FALSE, edge.color=t.col2, edge.width=wid2+3, show.node.label=TRUE)
 ```
 
-Node probabilities plotted against tips within the clades
-```{r}
+## Node probabilities plotted against tips within the clades
+```{r Node probabilities plotted against tips within the clades}
 zs$i <- as.factor(dist.nodes(ebola)[1,94:185])
 #colrs <- colorRampPalette(brewer.pal(11,"PiYG"))(92)
 colrs <- colorRampPalette(colors =c("#284e57", "mediumvioletred"))(92)
@@ -108,8 +108,8 @@ ggplot(data=zs, (aes(x=Node.Pr, y=N.Tips/93))) +
   scale_color_manual(values=colrs)
 ```
 
-Coloring the full ebola tree by the clades in the scatterplot above
-```{r}
+## Coloring the full ebola tree by the clades in the scatterplot above
+```{r Coloring the full ebola tree by the clades in the scatterplot above}
 x <-zs$i
 colmap <- as.data.frame(cbind(x, 1:92))
 treecol <- rep(0, 92)
@@ -118,55 +118,4 @@ for(i in 1:92){
 }
 treecol <- rep(treecol, each=2)
 plot(ebola2, show.tip.label=FALSE, edge.color=treecol, edge.width=5)
-```
-
-Tree with outlier at tip 38
-```{r}
-#Looking at the tree without tip 38, long branch outluer
-dt.ebola <- drop.tip(ebola, 38)
-dt.e <- subtrees(dt.ebola)
-dt.ebola.pr <- matrix(NA, nrow=length(dt.e), ncol = 3)
-colnames(dt.ebola.pr) <- c("Node.Pr", "N.Tips", "ZScore")
-
-for(i in 1:length(dt.e)){
-  dt.ebola.pr[i,1] <- nu.node.prob(dt.ebola, dt.e[[i]], 1)
-  dt.ebola.pr[i,2] <- length(dt.e[[i]]$tip.label)
-}
-
-#Calculating Z-Scores
-for(i in 1:length(dt.ebola.pr[,3])){
-  dt.ebola.pr[i,3] <- dt.ebola.pr[i,1]*92- dt.ebola.pr[i,2]
-}
-dt.ebola.pr[,3] <- scale(dt.ebola.pr[,3])
-
-#Visualizing the tree without tip 38
-dt.ebola2 <- dt.ebola
-dt.ebola2$node.label <- round(dt.ebola.pr[,1], digits=5)
-plot(dt.ebola2, show.node.label = TRUE, cex=.7, align.tip.label=TRUE)
-
-
-#Visualizing new outliers with ggplot (They're pretty much the same but a little closer together)
-zs.2 <- as.data.frame(dt.ebola.pr)
-zs.2$outlier <- ifelse(abs(zs.2[,3]>2),TRUE, FALSE)
-cols <- c("#a6a2a8","#284e57")
-ggplot(data=zs.2, aes(zs.2$ZScore, fill=zs.2$outlier)) + 
-  geom_histogram(binwidth=.1) + 
-  xlab("Z-Scores of Branch Length Expectations(Tip 38 Dropped)") + 
-  ylab("Frequency") + 
-  theme(legend.position="none") + 
-  scale_fill_manual(values= cols) + 
-  geom_segment(x=2-.05, y= 0, yend=20, xend=2-.05, linetype=2)
-
-
-#comparing the probabilities with and without the outlying tip 38
-x1 <- c(zs$Node.Pr[1:11], zs$Node.Pr[13:92])
-x2 <- zs.2$Node.Pr[1:91]
-diff <- as.data.frame(x2-x1)
-l.bound <-as.numeric(apply(diff, 2, mean) - 2*apply(diff, 2, sd))
-u.bound <-as.numeric(apply(diff, 2, mean) + 2*apply(diff, 2, sd))
-ggplot(diff, aes(diff)) + 
-  geom_histogram() +
-  xlab("Differences between node probabilities when tip 38 is dropped") +
-  geom_segment(x= u.bound, y= 0,yend=50, xend=u.bound, linetype=2) +
-  geom_segment(x= l.bound, y= 0,yend=50, xend=l.bound, linetype=2)
 ```

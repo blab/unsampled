@@ -19,23 +19,17 @@ Install necessary R packages with:
 
 `.Rmd` files can be knit in `.md` files with:
 
-    Rscript -e "library(knitr); knit('Toy_Tree_Example.Rmd')"
-    Rscript -e "library(knitr); knit('Ebola_Example_Visualizations.Rmd')"
+    Rscript -e "library(knitr); setwd('toy-tree'); knit('Toy_Tree.Rmd', 'README.md')"
+    Rscript -e "library(knitr); setwd('ebola-tree'); knit('Ebola_Tree.Rmd', 'README.md')"
 
 ## Coalescent algorithms
 
-Core functions are in the file [`Node_Prob_Functions.R`](Node_Prob_Functions.R). The file [`Node_Prob_Functions.md`](Node_Prob_Functions.md) describes these functions.
+Core functions are in the file [`Node_Prob_Functions.R`](Node_Prob_Functions.R). The file [`Node_Prob_Functions.md`](Node_Prob_Functions.md) describes these functions. More mathematical detail can be found in the [SURP poster](poster/surp_poster.png)
 
-More mathematical detail can be found in the [SURP poster](poster/surp_poster.png)
+## [Toy example](toy-tree/)
 
-## Toy example
+This is a simple tree example to demonstrate the algorithm.
 
-Code is in the file [`Toy_Tree_Example.Rmd`](Toy_Tree_Example.Rmd) and knitted results are in the file [`Toy_Tree_Example.Rmd`](Toy_Tree_Example.Rmd).
+## [Ebola analysis](ebola-tree/)
 
-## Ebola analysis
-
-Code is in the file [`Ebola_Example_Visualizations.Rmd`](Ebola_Example_Visualizations.Rmd) and knitted results are in the file [`Ebola_Example_Visualizations.Rmd`](Ebola_Example_Visualizations.Rmd).
-
-This uses data from the Ebola Sequence Consortium to demonstrate the methodology introduced in `Node_Prob_Functions`, quantifying proportion of samples expected under internal nodes. Includes visualizations of the labeled Ebola tree as well as calculation and visualization of  Z-scores measuring the difference between proportion of tips seen versus expected under a node. Z-scores serve as a metric for whether a node is predicted to be undersampled. Requires methods from `Node_Prob_Functions` and the Conakry Ebola subtree file [`EBOV_Conakry_subtree.tree`](EBOV_Conakry_subtree.tree) to run.
-
-The Ebola subtree of the Conakry lineage was extracted from the BEAST analysis conducted by [Dudas et al. 2016](https://github.com/ebov/space-time).
+This is an example using a lineage of Ebola circulating in Conakry during the West African outbreak.

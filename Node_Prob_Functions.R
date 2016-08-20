@@ -7,6 +7,7 @@ require(phylobase)
 require(adephylo)
 require(dplyr)
 require(stringr)
+require(ggplot2)
 
 # Given n, the number of sampled tips, and popsize, the population size, this coalescent simulator steps back in time randomly generating coalescent events and returning a list of lengths, descendants, number of lineages from each node, a hash table mapping parent nodes to descendants, total generations (total tree depth), n, and the intervals between each branch.
 

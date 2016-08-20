@@ -6,5 +6,5 @@ ipak <- function(pkg){
 }
 
 # usage
-packages <- c("ape", "hash", "phytools", "ctv", "phylobase", "adephylo", "dplyr", "stringr")
+packages <- c("ape", "hash", "phytools", "ctv", "phylobase", "adephylo", "dplyr", "stringr", "ggplot2")
 ipak(packages)

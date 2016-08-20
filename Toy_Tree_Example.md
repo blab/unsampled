@@ -1,24 +1,32 @@
-```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.path='figures/', fig.width=8, fig.height=6)
-```
+
 
 ## Load libraries and unsampled functions
-```{r Load libraries and unsampled functions, message=FALSE}
+
+```r
 source('Node_Prob_Functions.R')
 ```
 
 ## Stereotypical Coalescent Structure
-```{r Stereotypical Coalescent Structure}
+
+```r
 par(mar=c(0,0,0,0))
 set.seed(10)
 t <- create.phylo(40, 2000)
 plot(t, show.tip.label=FALSE)
+```
+
+![plot of chunk Stereotypical Coalescent Structure](figures/Stereotypical Coalescent Structure-1.png)
+
+```r
 u <- create.phylo(20, 2000)
 plot(u, show.tip.label=FALSE)
 ```
 
+![plot of chunk Stereotypical Coalescent Structure](figures/Stereotypical Coalescent Structure-2.png)
+
 ## Toy Tree
-```{r Toy Tree}
+
+```r
 edge = matrix(c(6,7, 7,1, 7,2, 6,8, 8,9, 9,3, 9,4, 8,5), nrow=8, ncol=2, byrow=TRUE)
 edge.length <- c(18, 16, 14, 12, 10, 6, 8, 4)
 tip.label <-c("1", "2", "3", "4", "5")
@@ -28,7 +36,8 @@ class(t) <- "phylo"
 ```
 
 ## Node probabilities for the toy tree
-```{r Node probabilities for the toy tree}
+
+```r
 node.pr <- rep(0,4)
 for(i in 1:4){
   node.pr[i] <- nu.node.prob(t, subtrees(t)[[i]], 50)
@@ -36,7 +45,8 @@ for(i in 1:4){
 ```
 
 ## Plotting toy tree with interval divisions
-```{r Plotting toy tree with interval divisions }
+
+```r
 par(mar=c(0.1,0.1,0.1,0.1))
 plot(t, edge.width=5)
 lines(c(34,34), c(0,15), lty=2, lwd=5, col ="#a6a2a8")
@@ -52,4 +62,6 @@ nodelabels(text = round(node.pr, 4), frame="none", col="#284e57", cex=1)
 tiplabels(text=t$tip.label, frame="circle", bg="#8bb9b9", col="white", cex= 1)
 edgelabels(text=t$edge.length, frame="none", adj=c(1,-.1), cex= 1)
 ```
+
+![plot of chunk Plotting toy tree with interval divisions](figures/Plotting toy tree with interval divisions-1.png)
 

@@ -96,22 +96,28 @@ Uses data from the Ebola Sequence Consortium to demonstrate the methodology intr
 
 The Ebola subtree of the Conakry lineage was extracted from the BEAST analysis conducted by [Dudas et al. 2016](https://github.com/ebov/space-time).
 
+### [`Toy_Tree_Example.Rmd`](Toy_Tree_Example.Rmd)
+
+Example using a simple random coalescent tree.
+
 #### Visualizations
 
 Ebola tree with labeled node proportions
 
-  * Colored by proportions
+![](figures/ebola_probs_tree.png)
 
 Histogram of node Z-scores showing outliers
 
-  * Corresponding histogram without tip 38
+![](figures/ebola_outliers_dist.png)
 
 Corresponding Ebola tree with colored outliers
 
-  * Corresponding tree without tip 38
+![](figures/ebola_outliers_tree.png)
 
-Scatterplot comparing predicted to actual proportion of tips under each node, colored by clade, sized by abs(z-score)
+Scatterplot comparing predicted to actual proportion of tips under each node, colored by clade, sized by z-score
 
-  * Corresponding tree colored by clade
+![](figures/ebola_zscore_dist.png)
 
 Toy tree plot and node calculations
+
+

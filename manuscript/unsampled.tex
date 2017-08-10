@@ -1,0 +1,128 @@
+\documentclass[11pt,oneside,letterpaper]{article}
+
+% graphicx package, useful for including eps and pdf graphics
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+% basic packages
+\usepackage{color}
+\usepackage{parskip}
+\setlength{\parskip}{0.15cm}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{url}
+\urlstyle{same}
+
+% text layout
+%\usepackage[left=0.6in,right=0.6in,top=0.5in,bottom=0.6in,footskip=0.7in]{geometry}
+\usepackage[letterpaper,margin=0.6in,footskip=0.7in]{geometry}
+\pagestyle{empty}
+
+% section titles
+\usepackage[compact]{titlesec}
+\titleformat{\subsubsection}[runin]{\normalfont\bfseries}{\thesubsubsection}{3pt}{}[ $\;\cdotp\;$]
+\titlespacing{\subsubsection}{0pt}{*1}{*0.5}
+
+% helps to keep figures from being orphaned on a page by themselves
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+
+% bold the 'Figure~#' in the caption and separate it with a period
+% captions will be left justified
+\usepackage[labelsep=period,font=small,labelfont=bf]{caption}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+% remove brackets from numbering in list of References
+\renewcommand\refname{Bibliography and References Cited}
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+
+% authors
+\usepackage{authblk}
+\renewcommand\Authands{ \& }
+\renewcommand\Authfont{\normalsize \bf}
+\renewcommand\Affilfont{\small \normalfont}
+\makeatletter
+\renewcommand\AB@affilsepx{, \protect\Affilfont}
+\makeatother
+
+% notation
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%%% TITLE %%%
+\title{\vspace{1.0cm} \LARGE \bf Estimating phylogenetic placement of unsampled infections}
+
+\author[1]{Stephanie Stacy}
+\author[1,2]{Allison Black}
+\author[1]{Gytis Dudas}
+\author[1]{Trevor Bedford}
+
+\affil[1]{Vaccine and Infectious Disease Division, Fred Hutchinson Cancer Research Center, Seattle, WA, USA}
+\affil[2]{Department of Epidemiology, University of Washington, Seattle, WA, USA}
+
+
+\date{\today}
+
+\begin{document}
+
+%% TITLE
+\maketitle
+
+%% ABSTRACT
+\begin{abstract}
+
+Text here.
+
+\end{abstract}
+
+\pagebreak
+
+%% INTRODUCTION
+\section*{Introduction}
+
+Text here.
+
+Example citation \cite{dudas2017virus}.
+
+Example Figure \ref{example_tree}.
+
+\begin{figure}[h]
+ \centering
+	\includegraphics[width=0.75\textwidth]{figures/example_tree}
+	\caption{\textbf{Title here.}
+	Text here.
+	}
+	\label{example_tree}
+\end{figure}
+
+%% MODEL
+\section*{Model}
+
+Text here.
+
+%% RESULTS
+\section*{Results}
+
+Text here.
+
+%% DISCUSSION
+\section*{Discussion}
+
+Text here.
+
+%% METHODS
+\section*{Methods}
+
+Text here.
+
+\newpage
+\bibliographystyle{plos}
+\bibliography{unsampled}
+
+\end{document}

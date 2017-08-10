@@ -1,2 +1,17 @@
+unsampled.pdf
+
+# LaTeX intermediaries #
+########################
+*.aux
+*.log
+*.bbl
+*.blg
+*.out
+*.pdfsync
+
+# Checkpoints etc...
 .DS_Store
 .Rhistory
+*.pyc
+*.checkpoint.ipynb
+*ipynb_checkpoints/

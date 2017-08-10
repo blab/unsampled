@@ -12,23 +12,7 @@ unsampled.pdf
 # Checkpoints etc...
 .DS_Store
 .Rhistory
-<<<<<<< Updated upstream
 *.pyc
 *.checkpoint.ipynb
 *ipynb_checkpoints/
 
-=======
-
-#Folders to ignore
-R-code/*
-2016/*
-beast-simulations/*
-2017-presentations/*
-
-#test notebooks to ignore
-python-code/testing/*
-/**/.ipynb_checkpoints/*
-
-#python files to ignore
-python-code/baltic*
->>>>>>> Stashed changes

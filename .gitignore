@@ -8,6 +8,7 @@ unsampled.pdf
 *.blg
 *.out
 *.pdfsync
+*.synctex.gz
 
 # Checkpoints etc...
 .DS_Store

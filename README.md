@@ -8,28 +8,10 @@
 
 In viral outbreaks, some infections are likely to be missed. Finding as many cases as possible is an important foundation for developing better treatment and containing the spread of pathogens. This project is ultimately designed to highlight clades containing possible undersampled pockets.
 
-To achieve this, we first calculate the proportion of data expected 
+To achieve this, we first calculate the proportion of data expected
 under each internal node in a given tree. We extend this method to target nodes and branches within the tree expected to be over or under sampled based upon z-scores of these nodal probabilities.  For a given tree structure, conditional probabilities describing the chance of seeing a new, unknown sample coalescing under a given node in the tree are calculated based on effective population size, interval lengths (captured by sampling and coalescent events), and number of lineages within intervals.
 
-## Build
+## Organization
 
-Install necessary R packages with:
-
-    Rscript install.R
-
-`.Rmd` files can be knit in `.md` files with:
-
-    Rscript -e "library(knitr); setwd('toy-tree'); knit('Toy_Tree.Rmd', 'README.md')"
-    Rscript -e "library(knitr); setwd('ebola-tree'); knit('Ebola_Tree.Rmd', 'README.md')"
-
-## [Coalescent functions](functions/)
-
-These are the core functions of the method. More mathematical detail can be found in the [SURP poster](poster/surp_poster.png).
-
-## [Toy example](toy-tree/)
-
-This is a simple tree example to demonstrate the algorithm.
-
-## [Ebola analysis](ebola-tree/)
-
-This is an example using a lineage of Ebola circulating in Conakry during the West African outbreak.
+* Analysis code in [analysis](analysis/)
+* Manuscript in [manuscript](manuscript/)
